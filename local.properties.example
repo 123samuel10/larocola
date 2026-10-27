@@ -1,0 +1,13 @@
+
+# SDK de Android (Android Studio lo configura automáticamente)
+sdk.dir=/ruta/a/tu/android/sdk
+
+# Supabase
+SUPABASE_URL=https://tu-proyecto.supabase.co
+SUPABASE_ANON_KEY=eyJ...
+
+# Dominio de la landing page (sin https://, sin /final)
+LANDING_HOST=tu-usuario.github.io
+
+# Slug por defecto para pruebas sin QR
+DEFAULT_SLUG=la-esquina

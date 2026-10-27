@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">La Rocola</string>
+
+    <!-- Inicio -->
+    <string name="inicio_titulo">Tú eliges la música de esta noche.</string>
+    <string name="inicio_subtitulo">Pide canciones y vota por las que quieres escuchar. Sin cuentas, sin formularios.</string>
+    <string name="inicio_conectado_a">Conectado a</string>
+    <string name="inicio_sesion_activa">Sesión activa</string>
+    <string name="inicio_entrar">Entrar a la rocola</string>
+    <string name="inicio_privacidad">Usamos un identificador anónimo de tu celular. No pedimos nombre, correo ni teléfono.</string>
+    <string name="inicio_cargando">Conectando…</string>
+    <string name="inicio_error_red">No se pudo conectar. Revisa tu internet.</string>
+    <string name="inicio_no_encontrado">Establecimiento no encontrado.</string>
+    <string name="accion_reintentar">Volver a intentar</string>
+
+    <!-- Búsqueda -->
+    <string name="busqueda_titulo">Pide una canción</string>
+    <string name="busqueda_placeholder">Busca una canción o artista</string>
+    <string name="busqueda_resultados">RESULTADOS</string>
+    <string name="busqueda_n_videos">%d videos</string>
+    <string name="busqueda_vacio">Escribe una canción o artista</string>
+    <string name="busqueda_sin_resultados">Sin resultados. Revisa la escritura e inténtalo de nuevo.</string>
+    <string name="busqueda_sin_conexion">Sin conexión. Revisa tu internet e inténtalo de nuevo.</string>
+    <string name="busqueda_cuota_agotada">La búsqueda no está disponible por ahora, inténtalo más tarde.</string>
+    <string name="busqueda_no_reproducible">No se puede reproducir aquí</string>
+    <string name="busqueda_pedir_cancion">Pedir %s</string>
+    <string name="busqueda_proximo">Pedir canciones llega muy pronto</string>
+
+    <!-- Servicio no disponible -->
+    <string name="servicio_titulo">Servicio no disponible</string>
+    <string name="servicio_descripcion">En este momento no se pueden pedir canciones ni votar. La rocola abre de nuevo en el próximo horario.</string>
+    <string name="servicio_proxima_apertura">PRÓXIMA APERTURA</string>
+
+    <!-- Cola -->
+    <string name="cola_proximamente">La cola llega en el siguiente entregable</string>
+
+    <!-- Navegación -->
+    <string name="nav_buscar">Buscar</string>
+    <string name="nav_cola">Cola</string>
+
+    <!-- Accesibilidad -->
+    <string name="cd_miniatura">Miniatura de %s</string>
+    <string name="cd_buscar">Buscar</string>
+    <string name="cd_limpiar">Limpiar búsqueda</string>
+    <string name="cd_logo">Logo de La Rocola</string>
+</resources>

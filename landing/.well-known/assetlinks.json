@@ -3,6 +3,6 @@
   "target": {
     "namespace": "android_app",
     "package_name": "com.larocola.app",
-    "sha256_cert_fingerprints": ["REEMPLAZAR_CON_HUELLA_SHA256_DEL_KEYSTORE"]
+    "sha256_cert_fingerprints": ["EE:B4:EA:57:67:9A:08:D4:9B:F2:EF:78:6A:E4:F9:AC:CD:D9:EA:D0:6D:DD:99:9D:54:37:87:BD:3B:5E:94:2B"]
   }
 }]

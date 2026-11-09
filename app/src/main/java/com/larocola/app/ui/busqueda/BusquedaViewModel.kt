@@ -8,8 +8,11 @@ import com.larocola.app.data.model.Cancion
 import com.larocola.app.di.AppContainer
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -30,6 +33,11 @@ data class SugerenciasState(
     val mostrar: Boolean = false,
 )
 
+sealed interface SolicitudEvento {
+    data class Exito(val titulo: String, val yaExistia: Boolean) : SolicitudEvento
+    data class Error(val mensaje: String) : SolicitudEvento
+}
+
 @OptIn(FlowPreview::class)
 class BusquedaViewModel(private val container: AppContainer) : ViewModel() {
 
@@ -41,6 +49,9 @@ class BusquedaViewModel(private val container: AppContainer) : ViewModel() {
 
     private val _textoBusqueda = MutableStateFlow("")
     val textoBusqueda: StateFlow<String> = _textoBusqueda.asStateFlow()
+
+    private val _solicitudEventos = MutableSharedFlow<SolicitudEvento>(extraBufferCapacity = 1)
+    val solicitudEventos: SharedFlow<SolicitudEvento> = _solicitudEventos.asSharedFlow()
 
     private var searchJob: Job? = null
     // Prevents the debounce from re-showing suggestions after buscar() is called
@@ -101,6 +112,25 @@ class BusquedaViewModel(private val container: AppContainer) : ViewModel() {
                 }
             } catch (e: Exception) {
                 _uiState.value = BusquedaUiState.Error(e.message ?: "Error inesperado")
+            }
+        }
+    }
+
+    fun solicitar(cancion: Cancion) {
+        val sesionId = container.sesionActivaId ?: run {
+            viewModelScope.launch { _solicitudEventos.emit(SolicitudEvento.Error("Sin sesión activa")) }
+            return
+        }
+        val cancionId = cancion.cancionId ?: run {
+            viewModelScope.launch { _solicitudEventos.emit(SolicitudEvento.Error("ID de canción no disponible")) }
+            return
+        }
+        viewModelScope.launch {
+            when (val r = container.solicitudRepository.solicitar(sesionId, cancionId)) {
+                is AppResult.Success -> _solicitudEventos.emit(
+                    SolicitudEvento.Exito(cancion.titulo, r.data.yaExistia)
+                )
+                is AppResult.Error -> _solicitudEventos.emit(SolicitudEvento.Error(r.message))
             }
         }
     }

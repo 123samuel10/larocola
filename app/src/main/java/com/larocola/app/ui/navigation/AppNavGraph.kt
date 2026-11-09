@@ -11,7 +11,7 @@ import androidx.navigation.navArgument
 import com.larocola.app.core.config.AppConfig
 import com.larocola.app.di.AppContainer
 import com.larocola.app.ui.busqueda.BusquedaScreen
-import com.larocola.app.ui.cola.ColaPlaceholderScreen
+import com.larocola.app.ui.cola.ColaScreen
 import com.larocola.app.ui.inicio.InicioScreen
 import com.larocola.app.ui.servicio.ServicioNoDisponibleScreen
 
@@ -55,7 +55,8 @@ fun AppNavGraph(
         }
 
         composable(Destino.Cola.ruta) {
-            ColaPlaceholderScreen(
+            ColaScreen(
+                container = container,
                 onNavegaABusqueda = { navController.navigate(Destino.Busqueda.ruta) },
             )
         }

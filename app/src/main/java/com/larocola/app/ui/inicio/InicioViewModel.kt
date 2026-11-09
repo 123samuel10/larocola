@@ -57,6 +57,9 @@ class InicioViewModel(
                 }
                 is AppResult.Success -> {
                     val resp = sesion.data
+                    if (resp.estado == "activa") {
+                        container.sesionActivaId = resp.sesionId
+                    }
                     _uiState.value = when (resp.estado) {
                         "activa" -> InicioUiState.SesionActiva(
                             nombreEstablecimiento = resp.establecimiento.nombre,

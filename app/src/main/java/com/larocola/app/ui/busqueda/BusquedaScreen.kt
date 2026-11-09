@@ -31,7 +31,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
-import kotlinx.coroutines.launch
 import com.larocola.app.R
 import com.larocola.app.core.ui.theme.*
 import com.larocola.app.core.util.formatearDuracion
@@ -50,10 +49,24 @@ fun BusquedaScreen(
     val textoBusqueda by vm.textoBusqueda.collectAsState()
 
     val snackbarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
     val keyboard = LocalSoftwareKeyboardController.current
 
-    val proximoMsg = stringResource(R.string.busqueda_proximo)
+    val solicitudExitoMsg = stringResource(R.string.solicitud_registrada)
+    val solicitudYaMsg = stringResource(R.string.solicitud_ya_existia)
+    val solicitudErrMsg = stringResource(R.string.solicitud_error)
+
+    LaunchedEffect(vm) {
+        vm.solicitudEventos.collect { evento ->
+            val msg = when (evento) {
+                is SolicitudEvento.Exito -> if (evento.yaExistia)
+                    solicitudYaMsg.format(evento.titulo)
+                else
+                    solicitudExitoMsg.format(evento.titulo)
+                is SolicitudEvento.Error -> "$solicitudErrMsg: ${evento.mensaje}"
+            }
+            snackbarHostState.showSnackbar(msg)
+        }
+    }
 
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
@@ -83,7 +96,6 @@ fun BusquedaScreen(
                 .padding(padding),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            // Header azul
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -107,7 +119,6 @@ fun BusquedaScreen(
                         },
                         onLimpiar = vm::limpiar,
                     )
-                    // Suggestions
                     if (sugerenciasState.mostrar && sugerenciasState.sugerencias.isNotEmpty()) {
                         Card(
                             modifier = Modifier.fillMaxWidth(),
@@ -134,7 +145,6 @@ fun BusquedaScreen(
                 }
             }
 
-            // Contenido principal
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -152,11 +162,7 @@ fun BusquedaScreen(
                             consulta = s.consulta,
                             columnas = cols,
                             modifier = contentMod,
-                            onPedir = {
-                                scope.launch {
-                                    snackbarHostState.showSnackbar(proximoMsg)
-                                }
-                            },
+                            onPedir = { cancion -> vm.solicitar(cancion) },
                         )
                     }
                     is BusquedaUiState.SinResultados -> EstadoTexto(
@@ -208,7 +214,7 @@ private fun ResultadosList(
     consulta: String,
     columnas: Int,
     modifier: Modifier,
-    onPedir: (String) -> Unit,
+    onPedir: (Cancion) -> Unit,
 ) {
     LazyColumn(modifier = modifier, contentPadding = PaddingValues(vertical = 12.dp)) {
         item {
@@ -241,7 +247,7 @@ private fun ResultadosList(
 @Composable
 private fun CancionItem(
     cancion: Cancion,
-    onPedir: (String) -> Unit,
+    onPedir: (Cancion) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val alpha = if (cancion.reproducible) 1f else 0.45f
@@ -263,7 +269,6 @@ private fun CancionItem(
                         .clip(RoundedCornerShape(8.dp)),
                     contentScale = ContentScale.Crop,
                 )
-                // Duration chip
                 Surface(
                     modifier = Modifier
                         .align(Alignment.BottomEnd)
@@ -311,7 +316,7 @@ private fun CancionItem(
             if (cancion.reproducible) {
                 Spacer(Modifier.width(8.dp))
                 FilledIconButton(
-                    onClick = { onPedir(cancion.titulo) },
+                    onClick = { onPedir(cancion) },
                     modifier = Modifier.size(40.dp),
                     colors = IconButtonDefaults.filledIconButtonColors(containerColor = RojoPrincipal),
                 ) {
@@ -356,7 +361,6 @@ private fun EstadoTexto(mensaje: String, modifier: Modifier) {
 @Composable
 private fun PreviewResultados() {
     LaRocolaTheme {
-        // Simplified preview
         Text("BusquedaScreen Preview — abrir en emulador para ver completo")
     }
 }

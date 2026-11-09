@@ -25,15 +25,28 @@
     <string name="busqueda_cuota_agotada">La búsqueda no está disponible por ahora, inténtalo más tarde.</string>
     <string name="busqueda_no_reproducible">No se puede reproducir aquí</string>
     <string name="busqueda_pedir_cancion">Pedir %s</string>
-    <string name="busqueda_proximo">Pedir canciones llega muy pronto</string>
+
+    <!-- Solicitar canción -->
+    <string name="solicitud_registrada">"%s" fue añadida a la cola</string>
+    <string name="solicitud_ya_existia">"%s" ya está en la cola</string>
+    <string name="solicitud_error">No se pudo añadir la canción</string>
 
     <!-- Servicio no disponible -->
     <string name="servicio_titulo">Servicio no disponible</string>
     <string name="servicio_descripcion">En este momento no se pueden pedir canciones ni votar. La rocola abre de nuevo en el próximo horario.</string>
     <string name="servicio_proxima_apertura">PRÓXIMA APERTURA</string>
 
-    <!-- Cola -->
-    <string name="cola_proximamente">La cola llega en el siguiente entregable</string>
+    <!-- Cola (E4) -->
+    <string name="cola_titulo">Cola de canciones</string>
+    <string name="cola_vacia">Todavía no hay canciones en la cola</string>
+    <string name="cola_vacia_descripcion">¡Busca una canción y pídela para ser el primero!</string>
+    <string name="cola_sin_sesion">No hay sesión activa</string>
+    <string name="cola_n_votos">%d votos</string>
+    <string name="cola_reproduciendo">Reproduciendo</string>
+
+    <!-- Votos -->
+    <string name="voto_registrado">¡Voto registrado! %d votos en total</string>
+    <string name="voto_eliminado">Voto eliminado</string>
 
     <!-- Navegación -->
     <string name="nav_buscar">Buscar</string>
@@ -44,4 +57,5 @@
     <string name="cd_buscar">Buscar</string>
     <string name="cd_limpiar">Limpiar búsqueda</string>
     <string name="cd_logo">Logo de La Rocola</string>
+    <string name="cd_votar">Votar por %s</string>
 </resources>

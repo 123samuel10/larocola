@@ -52,3 +52,33 @@ data class BusquedaRequest(
     val q: String,
     @SerialName("sesion_id") val sesionId: String? = null,
 )
+
+@Serializable
+data class SolicitudEnCola(
+    @SerialName("solicitud_id") val solicitudId: String,
+    @SerialName("cancion_id") val cancionId: String,
+    @SerialName("youtube_id") val youtubeId: String,
+    val titulo: String,
+    val artista: String,
+    @SerialName("duracion_seg") val duracionSeg: Int,
+    @SerialName("miniatura_url") val miniaturaUrl: String,
+    val estado: String,
+    val votos: Int,
+    @SerialName("ya_votado") val yaVotado: Boolean,
+    @SerialName("es_mia") val esMia: Boolean,
+)
+
+@Serializable
+data class SolicitudResponse(
+    @SerialName("solicitud_id") val solicitudId: String,
+    @SerialName("ya_existia") val yaExistia: Boolean,
+)
+
+@Serializable
+data class VotoResponse(
+    @SerialName("total_votos") val totalVotos: Int,
+    @SerialName("ya_votado") val yaVotado: Boolean,
+)
+
+@Serializable
+data class ColaResponse(val items: List<SolicitudEnCola>)
